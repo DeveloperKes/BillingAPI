@@ -14,5 +14,9 @@ public class InvoiceService(IInvoiceRepository invoiceRepository) : IInvoiceServ
     {
         return await _invoiceRepository.GetInvoiceByIdAsync(id);
     }
+    public async Task<ResponseDto<int>> CreateInvoiceAsync(CreateInvoiceDto createInvoiceDto)
+    {
+        return await _invoiceRepository.CreateInvoiceAsync(createInvoiceDto);
+    }
 
 }

@@ -1,4 +1,6 @@
 ﻿using Billing.Application.Services;
+using Billing.Domain.DTOs;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Billing.Api.Controllers;
@@ -8,7 +10,6 @@ namespace Billing.Api.Controllers;
 public class InvoicesController(IInvoiceService invoiceService) : ControllerBase
 {
     private readonly IInvoiceService _invoiceService = invoiceService;
-    private readonly ILogger<InvoicesController> _logger;
 
     [HttpGet]
     public async Task<IActionResult> GetAllInvoicesAsync()
@@ -39,4 +40,21 @@ public class InvoicesController(IInvoiceService invoiceService) : ControllerBase
         }
         return Ok(response);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateInvoiceAsync([FromBody] CreateInvoiceDto createInvoiceDto)
+    {
+        var response = await _invoiceService.CreateInvoiceAsync(createInvoiceDto);
+
+        if (response.Code == 500)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, response);
+        }
+        if (response.Code != 0)
+        {
+            return BadRequest(response);
+        }
+        return Ok(response);
+    }
 }
+
