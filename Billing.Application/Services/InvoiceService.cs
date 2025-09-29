@@ -14,6 +14,14 @@ public class InvoiceService(IInvoiceRepository invoiceRepository) : IInvoiceServ
     {
         return await _invoiceRepository.GetInvoiceByIdAsync(id);
     }
+    public async Task<ResponseDto<PagedResultDto<InvoiceDto?>>> GetInvoiceByNumberAsync(int number)
+    {
+        return await _invoiceRepository.GetInvoiceByNumberAsync(number);
+    }
+    public async Task<ResponseDto<PagedResultDto<InvoiceDto?>>> GetInvoiceByClientAsync(int clientId)
+    {
+        return await _invoiceRepository.GetInvoiceByClientAsync(clientId);
+    }
     public async Task<ResponseDto<int>> CreateInvoiceAsync(CreateInvoiceDto createInvoiceDto)
     {
         return await _invoiceRepository.CreateInvoiceAsync(createInvoiceDto);
