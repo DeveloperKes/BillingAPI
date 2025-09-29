@@ -13,10 +13,16 @@ builder.Services.AddScoped<IClientRepository>(sp =>
     new ClientRepository(builder.Configuration.GetConnectionString("DefaultConnection")!)
 );
 builder.Services.AddScoped<IClientService, ClientService>();
+
 builder.Services.AddScoped<IProductRepository>(sp =>
     new ProductRepository(builder.Configuration.GetConnectionString("DefaultConnection")!)
 );
 builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddScoped<IInvoiceRepository>(sp =>
+    new InvoiceRepository(builder.Configuration.GetConnectionString("DefaultConnection")!)
+);
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 
 builder.Services.AddSwaggerGen(c =>
 {
