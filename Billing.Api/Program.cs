@@ -35,12 +35,24 @@ builder.Services.AddRouting(options =>
     options.LowercaseQueryStrings = true;
 });
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // frontend Angular
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors(MyAllowSpecificOrigins);
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
